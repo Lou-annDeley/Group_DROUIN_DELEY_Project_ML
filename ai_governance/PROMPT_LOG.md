@@ -13,3 +13,5 @@ In notebook 04, working strictly on the training data with stratified cross-vali
 Prompt 4 (Lou-Ann – Notebooks 05 and 06)
 
 In notebooks 05 and 06, compare ensemble models and an MLP classifier using fixed random_state=42 and strict isolation of test.csv. Use nested cross-validation when tuning MLP hyperparameters so inner search never touches outer validation folds, compare against non-nested tuning and ensemble models, and reserve test.csv for a single evaluation in notebook 06 only after notebook 05 finishes model comparison and selects the final model. Include uncertainty estimates, error and failure mode analysis, and a fallback to a well-regularized ensemble if the MLP overfits or lacks stability.
+
+Note: the prompts below are the improved versions we wrote after auditing the AI's outputs (see AI_AUDIT.md). Our original prompts were much shorter and less constrained, which caused the flaws listed in the audit.
