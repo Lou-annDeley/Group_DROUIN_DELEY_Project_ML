@@ -1,20 +1,15 @@
+Prompt 1 (Alix – Notebook 01)
 
-Prompt Log
+Using relative paths on data/phishing.csv for binary phishing classification, write modular Python code to inspect dataset shape, column types, missing values, class balance, exact duplicates across all 30 features and the label, and rows sharing identical features with conflicting labels. State the statistical assumptions behind non-parametric checks on skewed or discrete web and URL features, define a fallback rule before saving data/phishing_clean.csv, and keep preprocessing and scaling out of this step so nothing is fit before splitting into train and test sets.
 
-Entry 1 : Checking and exploring the dataset (Alix)
-I asked the AI if our dataset was good, then to start the exploration, without giving any rules. A better prompt would describe the data and ask for clear checks: missing values, class balance, exact duplicates, and no feature selection on the full dataset. I re-ran the checks in notebook 01 and found 5,205 duplicates, while the AI first said 5,269.
+Prompt 2 (Lou-Ann – Notebook 02)
 
-Entry 2 : Baseline (Alix)
-I asked the AI to "do week 2" without saying which model, split or metric to use. A better prompt would ask for a majority-class baseline and a logistic regression in a Pipeline, an 80/20 stratified split, 5-fold CV on the training set only, and recall as the main metric. I checked that the split is stratified and that the test set is never used.
+Using data/train.csv and data/test.csv with random_state=42 and stratified cross-validation, build a baseline classification pipeline in notebook 02 where preprocessing steps are fit only inside training folds and on the training split, never on test data. Recompute the majority-class baseline on the deduplicated data rather than relying on pre-deduplication counts, report precision, recall, F1, ROC-AUC, and PR-AUC alongside model assumptions, and include a fallback adjustment if regularization or probability calibration needs refinement.
 
-Entry 3 : Week 3 plan (Lou-Ann)
-My first prompt was: "Tell me exactly what we have to do for week 3 and how to do it." The answer was generic and planned the test evaluation too early. I then gave the AI access to our GitHub repository and asked it to compare our notebooks with the guidelines. It found that requirements.txt was empty and that ensembles and an out-of-course model were missing. We fixed this ourselves.
+Prompt 3 (Alix – Notebook 04)
 
-Entry 4 : Models and final evaluation (Alix)
-I asked the AI to do weeks 3 and 4 without giving precise rules. When it started the test evaluation, I noticed that notebook 05 was not done yet, so the final model would have been chosen after seeing the test set. A better prompt would be: "Compare all models with cross-validation, choose the final model, and only then evaluate it once on the test set." I re-ran notebook 03 and got the same scores.
+In notebook 04, working strictly on the training data with stratified cross-validation and random_state=42, compare filter, wrapper, L1 selection, and permutation importance without touching test.csv. Tune regularization strength (such as C = 0.005 vs. C = 0.03) so L1 bootstrap stability gives a clear ranking rather than saturating at 100% across too many features, note caveats of permutation importance when features are correlated, define a fallback rule for keeping a reduced feature subset, and verify scikit-learn parameter deprecation behavior (FutureWarning vs. error, using l1_ratio=1).
 
-Entry 5 : Feature selection and MLP (Lou-Ann)
-I used constrained prompts to review notebooks 04 and 05. In the first one, I described our data and methods, then wrote: "Check that no selection step sees the validation folds." and "Do not use the test set." In the second one, I wrote: "I will cite Grinsztajn et al. (NeurIPS 2022): summarise its main finding in two sentences, and do not invent any other reference." I checked that every selection step is inside the Pipeline and that the paper exists.
+Prompt 4 (Lou-Ann – Notebooks 05 and 06)
 
-Entry 6 : Statistical tests and final evaluation (Lou-Ann)
-I asked the AI to check our statistics. One prompt asked: "Check my statistical comparison: is the corrected resampled t-test of Nadeau & Bengio (2003) correctly implemented below, with the right n_test/n_train ratio?" Another one started with: "My final model is a Gradient Boosting chosen with cross-validation on the training set only." and asked if the test set is used only once and if the bootstrap confidence intervals are correct. I checked that the ratio is 1/4 for 5-fold CV and that test.csv is only loaded in notebook 06.
+In notebooks 05 and 06, compare ensemble models and an MLP classifier using fixed random_state=42 and strict isolation of test.csv. Use nested cross-validation when tuning MLP hyperparameters so inner search never touches outer validation folds, compare against non-nested tuning and ensemble models, and reserve test.csv for a single evaluation in notebook 06 only after notebook 05 finishes model comparison and selects the final model. Include uncertainty estimates, error and failure mode analysis, and a fallback to a well-regularized ensemble if the MLP overfits or lacks stability.
